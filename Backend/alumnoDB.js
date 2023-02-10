@@ -13,11 +13,11 @@ connection.connect((err) => {
 });
 //fin de conexion db
 
-var personaDb = {};
+var alumnoDb = {};
 
 
-personaDb.getAll = function (funCallback) {
-    connection.query("SELECT * FROM personas", function (err, result, fields) {
+alumnoDb.getAll = function (funCallback) {
+    connection.query("SELECT * FROM alumno", function (err, result, fields) {
         if (err) {
             funCallback({
                 message: "Surgio un problema, contactese con un administrador. Gracias",
@@ -30,8 +30,8 @@ personaDb.getAll = function (funCallback) {
     });
 }
 
-personaDb.getByDni = function (dni,funCallback) {
-    connection.query("SELECT * FROM personas WHERE dni=?",dni, function (err, result, fields) {
+alumnoDb.getByDni = function (dni,funCallback) {
+    connection.query("SELECT * FROM alumno WHERE dni=?",dni, function (err, result, fields) {
         if (err) {
             funCallback({
                 message: "Surgio un problema, contactese con un administrador. Gracias",
@@ -43,7 +43,7 @@ personaDb.getByDni = function (dni,funCallback) {
                 funCallback(undefined, result[0]);
             }else{
                 funCallback({
-                    message: "No se encontro la persona"
+                    message: "No se encontro el alumno"
                 });
             }
             
@@ -51,14 +51,14 @@ personaDb.getByDni = function (dni,funCallback) {
     });
 }
 
-personaDb.create = function (persona, funCallback) {
-    var query = 'INSERT INTO personas (dni,nombre,apellido) VALUES (?,?,?)'
-    var dbParams = [persona.dni, persona.nombre, persona.apellido];
+alumnoDb.create = function (alumno, funCallback) {
+    var query = 'INSERT INTO alumno (dni,nombre,apellido) VALUES (?,?,?)'
+    var dbParams = [alumno.dni, alumno.nombre, alumno.apellido];
     connection.query(query, dbParams, function (err, result, fields) {
         if (err) {
             if(err.code == 'ER_DUP_ENTRY'){
                 funCallback({
-                    message: `Ya existe la persona DNI ${persona.dni}`,
+                    message: `Ya existe el alumno DNI ${alumno.dni}`,
                     detail: err
                 });
             }else{
@@ -71,7 +71,7 @@ personaDb.create = function (persona, funCallback) {
             console.error(err);
         } else {
             funCallback(undefined, {
-                message: `Se creo la persona ${persona.apellido} ${persona.nombre}`,
+                message: `Se creo el alumno ${alumno.apellido} ${alumno.nombre}`,
                 detail: result
             });
         }
@@ -81,7 +81,7 @@ personaDb.create = function (persona, funCallback) {
 /**
  * 
  * @param {*} dni 
- * @param {*} persona 
+ * @param {*} alumno 
  * @param {*} funCallback 
  *         retorna:
  *              code = 1 (EXITO)
@@ -89,9 +89,9 @@ personaDb.create = function (persona, funCallback) {
  *              code = 3 (ERROR)
  * 
  */
-personaDb.update = function (dni, persona, funCallback) {
+alumnoDb.update = function (dni, alumno, funCallback) {
     var query = 'UPDATE personas SET dni = ? , nombre = ?, apellido = ? WHERE dni = ?'
-    var dbParams = [persona.dni, persona.nombre, persona.apellido, dni];
+    var dbParams = [alumno.dni, alumno.nombre, alumno.apellido, dni];
     connection.query(query, dbParams, function (err, result, fields) {
         if (err) {
             funCallback({
@@ -110,7 +110,7 @@ personaDb.update = function (dni, persona, funCallback) {
             } else {
                 funCallback({
                     code:1,
-                    message: `Se modifico la persona ${persona.apellido} ${persona.nombre}`,
+                    message: `Se modifico el alumno ${alumno.apellido} ${alumno.nombre}`,
                     detail: result
                 });
             }
@@ -120,8 +120,8 @@ personaDb.update = function (dni, persona, funCallback) {
 }
 
 
-personaDb.delete = function(dni,funCallback){
-    var query = 'DELETE FROM personas WHERE dni = ?'
+alumnoDb.delete = function(dni,funCallback){
+    var query = 'DELETE FROM alumno WHERE dni = ?'
     connection.query(query, dni, function (err, result, fields) {
         if (err) {
             funCallback({
@@ -132,12 +132,12 @@ personaDb.delete = function(dni,funCallback){
         } else {
             if (result.affectedRows == 0) {
                 funCallback(undefined,{
-                    message: `No se encontro la persona ${dni}`,
+                    message: `No se encontro el alumno ${dni}`,
                     detail: result
                 });
             } else {
                 funCallback(undefined,{
-                    message: `Se elimino la persona ${dni}`,
+                    message: `Se elimino el alumno ${dni}`,
                     detail: result
                 });
             }
@@ -146,4 +146,4 @@ personaDb.delete = function(dni,funCallback){
 }
 
 
-module.exports = personaDb;
+module.exports = alumnoDb;

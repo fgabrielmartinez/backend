@@ -15,8 +15,8 @@ app.get("/", function (req, res) {
     res.send("Mi primer ABM con NODE y MYSQL");
 });
 
-const personaCont = require("personaController.js");
-app.use("/api/persona",personaCont);
+const alumnoCont = require("alumnoController.js");
+app.use("/api/alumno",alumnoCont);
 
 const userCont = require("userController.js");
 app.use("/api/usuario",userCont);
