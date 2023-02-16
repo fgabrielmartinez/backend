@@ -2,7 +2,7 @@ require("rootpath")();
 const express = require('express');
 const app = express();
 
-const alumnoDb = require("alumnoDB.js");
+const cursoDb = require("cursoDB.js");
 
 
 app.get('/', getAll);
@@ -13,9 +13,14 @@ app.post('/', create);
 
 app.put('/:id', update);
 
+app.post('/:id', inscripcion);
+
+app.get('/:id', ListarCurso);
+
+
 
 function getAll(req, res) {
-    alumnoDb.getAll(function (err, result) {
+    cursoDb.getAll(function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -25,7 +30,7 @@ function getAll(req, res) {
 }
 
 function eliminar(req, res) {
-    alumnoDb.delete(req.params.id, function (err, result) {
+    cursoDb.delete(req.params.id, function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -39,7 +44,7 @@ function eliminar(req, res) {
 }
 
 function create(req, res) {
-    alumnoDb.create(req.body, function (err, result) {
+    cursoDb.create(req.body, function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -49,11 +54,32 @@ function create(req, res) {
 }
 
 function update(req, res) {
-    alumnoDb.update(req.params.id, req.body, function (result) {
+    cursoDb.update(req.params.id, req.body, function (result) {
         if (result.code == 3) {
             res.status(500).send(err);
         } else if (result.code == 2) {
             res.status(404).json(result);
+        } else {
+            res.json(result);
+        }
+    });
+}
+
+
+function inscripcion(req, res) {
+    cursoDb.inscripcion(req.params.id, req.body, function (err, result) {
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            res.json(result);
+        }
+    });
+}
+
+function ListarCurso(req, res) {
+    cursoDb.ListarCurso(req.params.id,function (err, result) {
+        if (err) {
+            res.status(500).send(err);
         } else {
             res.json(result);
         }

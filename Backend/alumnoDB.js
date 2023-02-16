@@ -99,13 +99,13 @@ alumnoDb.update = function (id, alumno, funCallback) {
             if (result.affectedRows == 0) {
                 funCallback({
                     code:2,
-                    message: `No se encontro la persona ${id}`,
+                    message: `No se encontro el alumno con el id: ${id}`,
                     detail: result
                 });
             } else {
                 funCallback({
                     code:1,
-                    message: `Se modifico la persona ${alumno.apellido} ${alumno.nombre}`,
+                    message: `Se modifico el alumno ${alumno.apellido} ${alumno.nombre}`,
                     detail: result
                 });
             }
@@ -113,28 +113,5 @@ alumnoDb.update = function (id, alumno, funCallback) {
     });
 
 }
-
-alumnoDb.getByDni = function (dni, funCallback) {
-    connection.query("SELECT * FROM alumno WHERE dni=?", dni, function (err, result, fields) {
-        if (err) {
-            funCallback({
-                message: "Surgio un problema, contactese con un administrador. Gracias",
-                detail: err
-            });
-            console.error(err);
-        } else {
-            if (result.length > 0) {
-                funCallback(undefined, result[0]);
-            } else {
-                funCallback({
-                    message: "No se encontro el alumno"
-                });
-            }
-
-        }
-    });
-}
-
-
 
 module.exports = alumnoDb;

@@ -10,13 +10,11 @@ app.use(morgan('tiny'));
 morgan(':method :url :status :res[content-length] - :response-time ms');
   
 
-
-app.get("/", function (req, res) {
-    res.send("Mi primer ABM con NODE y MYSQL");
-});
-
 const alumnoCont = require("alumnoController.js");
 app.use("/api/alumno",alumnoCont);
+
+const cursoCont = require("cursoController.js");
+app.use("/api/curso",cursoCont);
 
 const userCont = require("userController.js");
 app.use("/api/usuario",userCont);
