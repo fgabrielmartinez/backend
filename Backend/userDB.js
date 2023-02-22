@@ -16,6 +16,7 @@ connection.connect((err) => {
 var userDb = {};
 
 userDb.create = function (usuario, funCallback) {
+    let passwordHashed = bcrypt.hashSync(usuario.password,10);
     var query = 'INSERT INTO usuarios (email,nickname,password) VALUES (?,?,?)'
     var dbParams = [usuario.email, usuario.nickname, usuario.password];
     connection.query(query, dbParams, function (err, result, fields) {
@@ -42,5 +43,26 @@ userDb.create = function (usuario, funCallback) {
     });
 }
 
+
+userDb.findByNickname = function (nickname,funCallback) {
+    connection.query("SELECT * FROM usuario WHERE nickname=?",[nickname], function (err, result, fields) {
+        if (err) {
+            funCallback({
+                message: "Surgio un problema, contactese con un administrador. Gracias",
+                detail: err
+            });
+            console.error(err);
+        } else {
+            if(result.length>0){
+                funCallback(undefined, result[0]);
+            }else{
+                funCallback({
+                    message: "No se encontro el usuario"
+                });
+            }
+            
+        }
+    });
+}
 
 module.exports = userDb;

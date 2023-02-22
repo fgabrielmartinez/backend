@@ -19,6 +19,8 @@ app.use("/api/curso",cursoCont);
 const userCont = require("userController.js");
 app.use("/api/usuario",userCont);
 
+const securityCont = require("security.js");
+app.use("/api/security",securityCont.app);
 
 app.listen(config.server.port, function (err) {
     if (err) {

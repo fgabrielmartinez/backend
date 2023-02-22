@@ -1,11 +1,10 @@
 require("rootpath")();
 const express = require('express');
 const app = express();
-
 const userDb = require("userDB.js");
+const securityCont = require("security.js");
 
-
-app.post('/', create);
+app.post('/',securityCont.verificarToken, create);
 
 
 
