@@ -30,6 +30,26 @@ alumnoDb.getAll = function (funCallback) {
     });
 }
 
+alumnoDb.getById = function (id,funCallback) {
+    connection.query("SELECT * FROM alumno WHERE id=?",id, function (err, result, fields) {
+        if (err) {
+            funCallback({
+                message: "Surgio un problema, contactese con un administrador. Gracias",
+                detail: err
+            });
+            console.error(err);
+        } else {
+            if(result.length>0){
+                funCallback(undefined, result[0]);
+            }else{
+                funCallback({
+                    message: "No se encontro el alumno"
+                });
+            }
+            
+        }
+    });
+}
 
 alumnoDb.delete = function (id, funCallback) {
     var query = 'DELETE FROM alumno WHERE id = ?'

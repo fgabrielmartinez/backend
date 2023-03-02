@@ -7,6 +7,8 @@ const alumnoDb = require("alumnoDB.js");
 
 app.get('/', getAll);
 
+app.get('/:id', getById);
+
 app.delete('/:id', eliminar);
 
 app.post('/', create);
@@ -16,6 +18,16 @@ app.put('/:id', update);
 
 function getAll(req, res) {
     alumnoDb.getAll(function (err, result) {
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            res.json(result);
+        }
+    });
+}
+
+function getById(req, res) {
+    alumnoDb.getById(req.params.id,function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {

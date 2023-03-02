@@ -6,7 +6,7 @@ CREATE TABLE usuario (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   email VARCHAR(255),
   nickname VARCHAR(50),
-  password VARCHAR(50),
+  password VARCHAR(255),
   rol VARCHAR(50) 
   );
   
@@ -35,7 +35,7 @@ CREATE TABLE alumno_curso(
   FOREIGN KEY (id_curso) REFERENCES curso(id)
   );
 
-INSERT INTO usuario(nickname,password,email,rol) VALUES ('admin', 'admin','admin@admin.com','admin');
+INSERT INTO usuario(nickname,password,email,rol) VALUES ('admin', '$2a$12$NXeFR/gnEYU2POhKRZcpd.YUJmE3NGaZ1H/3Mo7P1K2kjE7eXe6ga','admin@admin.com','admin');
 
-INSERT INTO usuario(nickname,password,email,rol) VALUES ('docente', 'docente','docente@docente.com','docente');
+INSERT INTO usuario(nickname,password,email,rol) VALUES ('docente', '$2a$12$J9NQtkcxrNEXJ9QqSlysaudyuU4RPhQlUFcBiUA7QreUQtoJ3SQT2','docente@docente.com','docente');
 
