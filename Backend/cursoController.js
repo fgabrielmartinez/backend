@@ -9,6 +9,8 @@ app.get('/', getAll);
 
 app.get('/:id', getById);
 
+app.get('/byid/:id', ListarCurso);
+
 app.delete('/:id', eliminar);
 
 app.post('/', create);
@@ -17,7 +19,7 @@ app.put('/:id', update);
 
 app.post('/:id', inscripcion);
 
-// app.get('/:id', ListarCurso);
+
 
 
 
@@ -32,7 +34,7 @@ function getAll(req, res) {
 }
 
 function getById(req, res) {
-    cursoDb.getById(req.params.id,function (err, result) {
+    cursoDb.getById(req.params.id, function (err, result) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -88,14 +90,14 @@ function inscripcion(req, res) {
     });
 }
 
-// function ListarCurso(req, res) {
-//     cursoDb.ListarCurso(req.params.id,function (err, result) {
-//         if (err) {
-//             res.status(500).send(err);
-//         } else {
-//             res.json(result);
-//         }
-//     });
-// }
+function ListarCurso(req, res) {
+    cursoDb.ListarCurso(req.params.id, function (err, result) {
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            res.json(result);
+        }
+    });
+}
 
 module.exports = app;
