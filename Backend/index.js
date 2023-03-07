@@ -18,6 +18,9 @@ app.use("/api/alumno",alumnoCont);
 const cursoCont = require("cursoController.js");
 app.use("/api/curso",cursoCont);
 
+const cursoalumnoCont = require("cursoalumnoController.js");
+app.use("/api/curso/insc",cursoalumnoCont);
+
 const userCont = require("userController.js");
 app.use("/api/usuario",userCont);
 

@@ -17,7 +17,7 @@ var alumnoDb = {};
 
 
 alumnoDb.getAll = function (funCallback) {
-    connection.query("SELECT * FROM alumno", function (err, result, fields) {
+    connection.query("SELECT * FROM alumno order by apellido", function (err, result, fields) {
         if (err) {
             funCallback({
                 message: "Surgio un problema, contactese con un administrador. Gracias",
@@ -52,11 +52,13 @@ alumnoDb.getById = function (id,funCallback) {
 }
 
 alumnoDb.delete = function (id, funCallback) {
+    var query1 = 'DELETE FROM alumno_curso WHERE id_alumno = ?'
+    connection.query(query1, id)
     var query = 'DELETE FROM alumno WHERE id = ?'
     connection.query(query, id, function (err, result, fields) {
         if (err) {
             funCallback({
-                message: "Surgio un problema, contactese con un administrador. Gracias",
+                message: "No se puede eliminar un alumno que este inscripto en un curso",
                 detail: err
             });
             console.error(err);

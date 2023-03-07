@@ -30,8 +30,8 @@ cursoDb.getAll = function (funCallback) {
     });
 }
 
-cursoDb.getById = function (id,funCallback) {
-    connection.query("SELECT * FROM curso WHERE id=?",id, function (err, result, fields) {
+cursoDb.getById = function (id, funCallback) {
+    connection.query("SELECT * FROM curso WHERE id=?", id, function (err, result, fields) {
         if (err) {
             funCallback({
                 message: "Surgio un problema, contactese con un administrador. Gracias",
@@ -39,14 +39,14 @@ cursoDb.getById = function (id,funCallback) {
             });
             console.error(err);
         } else {
-            if(result.length>0){
+            if (result.length > 0) {
                 funCallback(undefined, result[0]);
-            }else{
+            } else {
                 funCallback({
                     message: "No se encontro el curso"
                 });
             }
-            
+
         }
     });
 }
@@ -138,8 +138,9 @@ cursoDb.update = function (id, curso, funCallback) {
 }
 
 cursoDb.inscripcion = function (id, curso, funCallback) {
+    
     var parametros = curso.id;
-    var query1 = 'DELETE FROM alumno_curso WHERE id_curso = ?'
+    var query1 = 'DELETE FROM alumno_curso WHERE id_curso = ?';
     connection.query(query1, id)
     for (let i = 0; i < parametros.length; i++) {
         var query = 'INSERT INTO alumno_curso (id_alumno,id_curso) VALUES (?,?)'
@@ -168,19 +169,19 @@ cursoDb.inscripcion = function (id, curso, funCallback) {
     }
 }
 
-// cursoDb.ListarCurso = function (id, funCallback) {
-//     var query1 = 'SELECT alumno.nombre,alumno.apellido,alumno.dni FROM alumno INNER JOIN alumno_curso  WHERE alumno.id = alumno_curso.id_alumno AND alumno_curso.id_curso = ?'
-//     connection.query(query1, id, function (err, result, fields) {
-//         if (err) {
-//             funCallback({
-//                 message: "Surgio un problema, contactese con un administrador. Gracias",
-//                 detail: err
-//             });
-//             console.error(err);
-//         } else {
-//             funCallback(undefined, result);
-//         }
-//     });
-// }
+cursoDb.ListarCurso = function (id, funCallback) {
+    var query1 = 'SELECT alumno.nombre,alumno.apellido,alumno.dni FROM alumno INNER JOIN alumno_curso  WHERE alumno.id = alumno_curso.id_alumno AND alumno_curso.id_curso = ?'
+    connection.query(query1, id, function (err, result, fields) {
+        if (err) {
+            funCallback({
+                message: "Surgio un problema, contactese con un administrador. Gracias",
+                detail: err
+            });
+            console.error(err);
+        } else {
+            funCallback(undefined, result);
+        }
+    });
+}
 
 module.exports = cursoDb;
