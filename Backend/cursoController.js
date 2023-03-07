@@ -1,23 +1,23 @@
 require("rootpath")();
 const express = require('express');
 const app = express();
-
+const securityCont = require("security.js");
 const cursoDb = require("cursoDB.js");
 
 
 app.get('/', getAll);
 
-app.get('/:id', getById);
+app.get('/:id',securityCont.verificarToken, getById);
 
-app.get('/byid/:id', ListarCurso);
+app.get('/byid/:id',securityCont.verificarToken, ListarCurso);
 
-app.delete('/:id', eliminar);
+app.delete('/:id',securityCont.verificarToken, eliminar);
 
-app.post('/', create);
+app.post('/',securityCont.verificarToken, create);
 
-app.put('/:id', update);
+app.put('/:id',securityCont.verificarToken, update);
 
-app.post('/:id', inscripcion);
+
 
 
 
