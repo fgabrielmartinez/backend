@@ -11,11 +11,11 @@ app.get('/:id', getById);
 
 app.get('/byid/:id', ListarCurso);
 
-app.delete('/:id',securityCont.verificarToken, eliminar);
+app.delete('/:id', eliminar);
 
-app.post('/',securityCont.verificarToken, create);
+app.post('/', create);
 
-app.put('/:id',securityCont.verificarToken, update);
+app.put('/:id', update);
 
 
 
