@@ -7,9 +7,9 @@ const cursoDb = require("cursoDB.js");
 
 app.get('/', getAll);
 
-app.get('/:id',securityCont.verificarToken, getById);
+app.get('/:id', getById);
 
-app.get('/byid/:id',securityCont.verificarToken, ListarCurso);
+app.get('/byid/:id', ListarCurso);
 
 app.delete('/:id',securityCont.verificarToken, eliminar);
 
